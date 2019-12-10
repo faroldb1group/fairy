@@ -8,12 +8,20 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * {@link ResourceBundle} for YAML format.
+ */
 public class YamlResourceBundle extends ResourceBundle {
 
     public static final String EMPTY_KEY = "";
 
     private final Map<String, String> lookup = new HashMap<>();
 
+    /**
+     * Constructor.
+     *
+     * @param stream YAML/YML data as input stream.
+     */
     public YamlResourceBundle(InputStream stream) {
         Objects.requireNonNull(stream);
         Map<String, Object> metadata = new Yaml().loadAs(stream, Map.class);
@@ -31,32 +39,44 @@ public class YamlResourceBundle extends ResourceBundle {
         });
     }
 
-
+    /** {@inheritDoc} */
     @Override
     protected Set<String> handleKeySet() {
         return lookup.keySet();
     }
 
+    /** {@inheritDoc} */
     @Override
     public Enumeration<String> getKeys() {
         return Collections.enumeration(this.lookup.keySet());
     }
 
+    /** {@inheritDoc} */
     @Override
     protected Object handleGetObject(String key) {
         Objects.requireNonNull(key);
         return lookup.get(key);
     }
 
+    /**
+     * {@link ResourceBundle.Control} for YAML/YML format.
+     */
     public static class Control extends ResourceBundle.Control {
 
         private static final List<String> FORMAT_DEFAULT = Arrays.asList("yml", "yaml");
 
+        /**
+         * Singleton instance.
+         */
         public static final Control INSTANCE = new Control();
 
+        /**
+         * Constructor.
+         */
         private Control() {
         }
 
+        /** {@inheritDoc} */
         @Override
         public List<String> getFormats(String baseName) {
             Objects.requireNonNull(baseName);
@@ -64,6 +84,7 @@ public class YamlResourceBundle extends ResourceBundle {
             return Collections.unmodifiableList(values);
         }
 
+        /** {@inheritDoc} */
         @Override
         public ResourceBundle newBundle(String baseName, Locale locale, String format, ClassLoader loader, boolean reload) throws IllegalAccessException, InstantiationException, IOException {
             if (FORMAT_DEFAULT.contains(format)) {
