@@ -31,6 +31,12 @@ public class YamlResourceBundle extends ResourceBundle {
         });
     }
 
+
+    @Override
+    protected Set<String> handleKeySet() {
+        return lookup.keySet();
+    }
+
     @Override
     public Enumeration<String> getKeys() {
         return Collections.enumeration(this.lookup.keySet());

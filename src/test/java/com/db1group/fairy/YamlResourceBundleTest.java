@@ -20,6 +20,24 @@ class YamlResourceBundleTest {
     }
 
     @Test
+    void handeKeySet_shouldReturnKeySet_withMessageOneKey() {
+        YamlResourceBundle bundle = YamlResourceBundleTestDataBuilder.yamlResourceBundleWithMessages();
+        assertTrue(bundle.handleKeySet().contains("message.one"));
+    }
+
+    @Test
+    void handeKeySet_shouldReturnKeySet_withMessageTwoKey() {
+        YamlResourceBundle bundle = YamlResourceBundleTestDataBuilder.yamlResourceBundleWithMessages();
+        assertTrue(bundle.handleKeySet().contains("message.two"));
+    }
+
+    @Test
+    void handeKeySet_shouldReturnKeySet_withMessageOnlyDefaultKey() {
+        YamlResourceBundle bundle = YamlResourceBundleTestDataBuilder.yamlResourceBundleWithMessages();
+        assertTrue(bundle.handleKeySet().contains("message.only.default"));
+    }
+
+    @Test
     void getKeys_shouldReturnKeys() {
         YamlResourceBundle bundle = YamlResourceBundleTestDataBuilder.yamlResourceBundleWithMessages();
         assertEquals(Arrays.asList("message.two", "message.one", "message.only.default"), Collections.list(bundle.getKeys()));
