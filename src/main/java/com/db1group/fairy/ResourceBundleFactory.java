@@ -5,11 +5,11 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-final class MessageResourceFactory {
+final class ResourceBundleFactory {
 
     private static final Map<Locale, ResourceBundle> CACHE = new HashMap<>();
 
-    private MessageResourceFactory() {
+    private ResourceBundleFactory() {
     }
 
     static synchronized ResourceBundle getResourceBundle(Locale locale, String baseName) {

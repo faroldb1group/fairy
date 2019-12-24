@@ -10,8 +10,6 @@ public class MessageResource {
 
     public static final String DEFAULT_BASE_NAME = "i18n.messages";
 
-    public static final MessageResource INSTANCE = new MessageResource();
-
     private final String baseName;
 
     public MessageResource() {
@@ -19,6 +17,7 @@ public class MessageResource {
     }
 
     public MessageResource(String baseName) {
+        Objects.requireNonNull(baseName);
         this.baseName = baseName;
     }
 
@@ -26,7 +25,7 @@ public class MessageResource {
         return this.getMessage(key, Locale.getDefault());
     }
 
-    public String getMessage(String key, Object... arguments) {
+    public String getMessage(String key, Object[] arguments) {
         return this.getMessage(key, Locale.getDefault(), arguments);
     }
 
@@ -34,7 +33,7 @@ public class MessageResource {
         return this.getMessage(key, locale, key);
     }
 
-    public String getMessage(String key, Locale locale, Object... arguments) {
+    public String getMessage(String key, Locale locale, Object[] arguments) {
         return this.getMessage(key, locale, key, arguments);
     }
 
@@ -42,25 +41,30 @@ public class MessageResource {
         return this.getMessage(key, Locale.getDefault(), defaultMessage);
     }
 
-    public String getMessage(String key, String defaultMessage, Object... arguments) {
+    public String getMessage(String key, String defaultMessage, Object[] arguments) {
         return this.getMessage(key, Locale.getDefault(), defaultMessage, arguments);
     }
 
     public String getMessage(String key, Locale locale, String defaultMessage) {
+        Objects.requireNonNull(key);
+        Objects.requireNonNull(locale);
         Objects.requireNonNull(defaultMessage);
         ResourceBundle resourceBundle = getResourceBundle(locale);
         String message = getMessage(key, resourceBundle);
         return Objects.nonNull(message) && !message.isEmpty() ? message : defaultMessage;
     }
 
-    public String getMessage(String key, Locale locale, String defaultMessage, Object... arguments) {
+    public String getMessage(String key, Locale locale, String defaultMessage, Object[] arguments) {
+        Objects.requireNonNull(key);
+        Objects.requireNonNull(locale);
+        Objects.requireNonNull(defaultMessage);
         Objects.requireNonNull(arguments);
         String message = this.getMessage(key, locale, defaultMessage);
         return MessageFormat.format(message, arguments);
     }
 
     private ResourceBundle getResourceBundle(Locale locale) {
-        return MessageResourceFactory.getResourceBundle(locale, baseName);
+        return ResourceBundleFactory.getResourceBundle(locale, baseName);
     }
 
     private String getMessage(String key, ResourceBundle resourceBundle) {
@@ -68,6 +72,13 @@ public class MessageResource {
             return resourceBundle.getString(key);
         } catch (MissingResourceException e) {
             return null;
+        }
+    }
+
+    static class Arguments {
+        public static Object[] of(Object... values) {
+            Objects.requireNonNull(values);
+            return values;
         }
     }
 }

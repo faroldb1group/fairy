@@ -8,14 +8,14 @@ import java.util.ResourceBundle;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class MessageResourceFactoryTest {
+class ResourceBundleFactoryTest {
 
     @Test
     void getResourceBundle_shouldReturnNewFromCache() {
-        ResourceBundle resourceBundleOne = MessageResourceFactory.getResourceBundle(Locale.US, "i18n.messages");
+        ResourceBundle resourceBundleOne = ResourceBundleFactory.getResourceBundle(Locale.US, "i18n.messages");
         assertNotNull(resourceBundleOne);
 
-        ResourceBundle resourceBundleTwo = MessageResourceFactory.getResourceBundle(Locale.US, "i18n.messages");
+        ResourceBundle resourceBundleTwo = ResourceBundleFactory.getResourceBundle(Locale.US, "i18n.messages");
         assertNotNull(resourceBundleTwo);
 
         assertEquals(resourceBundleOne, resourceBundleTwo);
