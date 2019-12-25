@@ -21,21 +21,21 @@ class MessageResourceTest {
 
     private static final String DEFAULT_MESSAGE_NULL = null;
 
-    private MessageResource messageResource = new MessageResource(MessageResource.DEFAULT_BASE_NAME);
+    private MessageResource messageResource = MessageResource.ofBaseName(MessageResource.DEFAULT_BASE_NAME);
 
     @Test
-    void new_default() {
-        assertNotNull(new MessageResource());
+    void of_default() {
+        assertNotNull(MessageResource.of());
     }
 
     @Test
-    void new_baseName() {
-        assertNotNull(new MessageResource(MessageResource.DEFAULT_BASE_NAME));
+    void of_baseName() {
+        assertNotNull(MessageResource.ofBaseName(MessageResource.DEFAULT_BASE_NAME));
     }
 
     @Test
-    void new_baseName_throwException_whenBaseNameNull() {
-        assertThrows(NullPointerException.class, () -> new MessageResource(null));
+    void ofBaseName_throwException_whenBaseNameNull() {
+        assertThrows(NullPointerException.class, () -> MessageResource.ofBaseName(null));
     }
 
     @Test
@@ -202,13 +202,62 @@ class MessageResourceTest {
     }
 
     @Test
-    void arguments_of_shouldReturnArray() {
+    void arguments_of_1() {
+        assertArrayEquals(new String[]{"1"}, MessageResource.Arguments.of("1"));
+    }
+
+    @Test
+    void arguments_of_2() {
+        assertArrayEquals(new String[]{"1", "2"}, MessageResource.Arguments.of("1", "2"));
+    }
+
+    @Test
+    void arguments_of_3() {
+        assertArrayEquals(new String[]{"1", "2", "3"}, MessageResource.Arguments.of("1", "2", "3"));
+    }
+
+    @Test
+    void arguments_of_4() {
+        assertArrayEquals(new String[]{"1", "2", "3", "4"}, MessageResource.Arguments.of("1", "2", "3", "4"));
+    }
+
+    @Test
+    void arguments_of_5() {
+        assertArrayEquals(new String[]{"1", "2", "3", "4", "5"}, MessageResource.Arguments.of("1", "2", "3", "4", "5"));
+    }
+
+    @Test
+    void arguments_of_6() {
+        assertArrayEquals(new String[]{"1", "2", "3", "4", "5", "6"}, MessageResource.Arguments.of("1", "2", "3", "4", "5", "6"));
+    }
+
+    @Test
+    void arguments_of_7() {
+        assertArrayEquals(new String[]{"1", "2", "3", "4", "5", "6", "7"}, MessageResource.Arguments.of("1", "2", "3", "4", "5", "6", "7"));
+    }
+
+    @Test
+    void arguments_of_8() {
+        assertArrayEquals(new String[]{"1", "2", "3", "4", "5", "6", "7", "8"}, MessageResource.Arguments.of("1", "2", "3", "4", "5", "6", "7", "8"));
+    }
+
+    @Test
+    void arguments_of_9() {
+        assertArrayEquals(new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9"}, MessageResource.Arguments.of("1", "2", "3", "4", "5", "6", "7", "8", "9"));
+    }
+
+    @Test
+    void arguments_of_10() {
+        assertArrayEquals(new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"}, MessageResource.Arguments.of("1", "2", "3", "4", "5", "6", "7", "8", "9", "10"));
+    }
+
+    @Test
+    void arguments_of_varargs() {
         assertArrayEquals(new String[]{"one", "two"}, MessageResource.Arguments.of("one", "two"));
     }
 
-
     @Test
-    void arguments_of_shouldThrowException_whenArgumentsIsNull() {
+    void arguments_of_varargs_shouldThrowException_whenArgumentsIsNull() {
         assertThrows(NullPointerException.class, () -> MessageResource.Arguments.of(ARGUMENTS_NULL));
     }
 }

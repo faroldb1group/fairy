@@ -12,13 +12,17 @@ public class MessageResource {
 
     private final String baseName;
 
-    public MessageResource() {
-        this(DEFAULT_BASE_NAME);
-    }
-
-    public MessageResource(String baseName) {
+    private MessageResource(String baseName) {
         Objects.requireNonNull(baseName);
         this.baseName = baseName;
+    }
+
+    public static MessageResource of() {
+        return ofBaseName(DEFAULT_BASE_NAME);
+    }
+
+    public static MessageResource ofBaseName(String baseName) {
+        return new MessageResource(baseName);
     }
 
     public String getMessage(String key) {
@@ -76,6 +80,47 @@ public class MessageResource {
     }
 
     static class Arguments {
+
+        public static Object[] of(Object o1) {
+            return new Object[]{o1};
+        }
+
+        public static Object[] of(Object o1, Object o2) {
+            return new Object[]{o1, o2};
+        }
+
+        public static Object[] of(Object o1, Object o2, Object o3) {
+            return new Object[]{o1, o2, o3};
+        }
+
+        public static Object[] of(Object o1, Object o2, Object o3, Object o4) {
+            return new Object[]{o1, o2, o3, o4};
+        }
+
+        public static Object[] of(Object o1, Object o2, Object o3, Object o4, Object o5) {
+            return new Object[]{o1, o2, o3, o4, o5};
+        }
+
+        public static Object[] of(Object o1, Object o2, Object o3, Object o4, Object o5, Object o6) {
+            return new Object[]{o1, o2, o3, o4, o5, o6};
+        }
+
+        public static Object[] of(Object o1, Object o2, Object o3, Object o4, Object o5, Object o6, Object o7) {
+            return new Object[]{o1, o2, o3, o4, o5, o6, o7};
+        }
+
+        public static Object[] of(Object o1, Object o2, Object o3, Object o4, Object o5, Object o6, Object o7, Object o8) {
+            return new Object[]{o1, o2, o3, o4, o5, o6, o7, o8};
+        }
+
+        public static Object[] of(Object o1, Object o2, Object o3, Object o4, Object o5, Object o6, Object o7, Object o8, Object o9) {
+            return new Object[]{o1, o2, o3, o4, o5, o6, o7, o8, o9};
+        }
+
+        public static Object[] of(Object o1, Object o2, Object o3, Object o4, Object o5, Object o6, Object o7, Object o8, Object o9, Object o10) {
+            return new Object[]{o1, o2, o3, o4, o5, o6, o7, o8, o9, o10};
+        }
+
         public static Object[] of(Object... values) {
             Objects.requireNonNull(values);
             return values;
