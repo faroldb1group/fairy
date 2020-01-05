@@ -1,0 +1,33 @@
+resources:
+  - repo: self
+    fetchDepth: 15
+
+pool:
+  name: Mandala
+  demands:
+    - agent.name -equals mandala-staging
+
+steps:
+  - task: Maven@3
+    inputs:
+      mavenPomFile: 'pom.xml'
+      mavenOptions: '-Xmx3072m'
+      javaHomeOption: 'path'
+      jdkVersionOption: '1.11'
+      jdkDirectory: '/usr/local/src/jdk-11.0.2'
+      jdkArchitectureOption: 'x64'
+      publishJUnitResults: false
+      testResultsFiles: '**/TEST-*.xml'
+      goals: 'clean compile'
+
+  - script: mvn test
+    displayName: 'Run tests'
+
+  - script: mvn sonar:sonar -Dsonar.host.url=http://sonarqube.db1.com.br -Dsonar.branch=$(Build.SourceBranchName) -Dsonar.projectName=fairy
+    displayName: 'Run sonar'
+
+  - script: mvn deploy
+    displayName: Deploy Nexus Release Version
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+trigger:
+  - master
